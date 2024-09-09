@@ -1,5 +1,7 @@
 import { TalkStyle } from "../messages/messages";
 
+const VOICEVOX_URL = "http://localhost:50021";
+
 export async function synthesizeVoice(
   message: string,
   speaker_x: number,
@@ -8,23 +10,30 @@ export async function synthesizeVoice(
 ) {
   const param = {
     method: "POST",
-    body: JSON.stringify({
-      text: message,
-      speaker_x: speaker_x,
-      speaker_y: speaker_y,
-      style: style,
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
   };
 
+  const queryParams = new URLSearchParams();
+  queryParams.append("speaker", String(Math.ceil(speaker_x)));
+  queryParams.append("text", message);
+
   const koeiroRes = await fetch(
-    "https://api.rinna.co.jp/models/cttse/koeiro",
+    `${VOICEVOX_URL}/audio_query?${queryParams.toString()}`,
     param
   );
 
   const data = (await koeiroRes.json()) as any;
 
-  return { audio: data.audio };
+  const synthParams = new URLSearchParams();
+  synthParams.append("speaker", String(Math.ceil(speaker_x)));
+
+  return {
+    url: `${VOICEVOX_URL}/synthesis?${synthParams.toString()}`,
+    params: {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    }
+  };
 }

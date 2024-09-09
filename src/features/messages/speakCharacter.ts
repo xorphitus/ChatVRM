@@ -49,13 +49,13 @@ export const fetchAudio = async (talk: Talk): Promise<ArrayBuffer> => {
     talk.speakerY,
     talk.style
   );
-  const url = ttsVoice.audio;
+  const {url, params} = ttsVoice;
 
   if (url == null) {
     throw new Error("Something went wrong");
   }
 
-  const resAudio = await fetch(url);
+  const resAudio = await fetch(url, params);
   const buffer = await resAudio.arrayBuffer();
   return buffer;
 };
