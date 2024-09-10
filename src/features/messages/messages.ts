@@ -1,7 +1,7 @@
 import { VRMExpression, VRMExpressionPresetName } from "@pixiv/three-vrm";
 import { KoeiroParam } from "../constants/koeiroParam";
 
-// ChatGPT API
+// Ollama API
 export type Message = {
   role: "assistant" | "system" | "user";
   content: string;

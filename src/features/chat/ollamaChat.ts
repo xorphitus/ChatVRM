@@ -4,14 +4,11 @@ const OLLAMA_URL = "http://localhost:11434/api/chat";
 
 export async function getChatResponseStream(
   messages: Message[],
-  apiKey: string,
+  model: string,
 ) {
-  if (!apiKey) {
-    throw new Error("Invalid API Key");
+  if (!model) {
+    throw new Error("LLM model is not set");
   }
-
-  // TODO temporary work around
-  const model = apiKey;
 
   const res = await fetch(OLLAMA_URL, {
     method: "POST",
@@ -27,7 +24,7 @@ export async function getChatResponseStream(
     throw new Error("Something went wrong");
   }
 
-  const stream = new ReadableStream({
+  return new ReadableStream({
     async start(controller: ReadableStreamDefaultController) {
       const decoder = new TextDecoder("utf-8");
       try {
@@ -54,6 +51,4 @@ export async function getChatResponseStream(
       }
     },
   });
-
-  return stream;
 }

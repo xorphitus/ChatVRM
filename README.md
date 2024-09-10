@@ -9,7 +9,7 @@ ChatVRMの各機能は主に以下の技術を使用しています。
 - ユーザーの音声の認識
   - [Web Speech API(SpeechRecognition)](https://developer.mozilla.org/ja/docs/Web/API/SpeechRecognition)
 - 返答文の生成
-  - [ChatGPT API](https://platform.openai.com/docs/api-reference/chat)
+  - [Ollama](https://ollama.com)
 - 読み上げ音声の生成
   - [Koeiro API](http://koeiromap.rinna.jp/)
 - 3Dキャラクターの表示
@@ -47,14 +47,13 @@ npm run dev
 
 ---
 
-## ChatGPT API
+## Ollama
 
-ChatVRMでは返答文の生成にChatGPT APIを使用しています。
+ChatVRMでは返答文の生成にOllamaをHTTP API経由で使用しています。
 
-ChatGPT APIの仕様や利用規約については以下のリンクや公式サイトをご確認ください。
+Ollamaの仕様や利用規約については以下のリンクや公式サイトをご確認ください。
 
-- [https://platform.openai.com/docs/api-reference/chat](https://platform.openai.com/docs/api-reference/chat)
-- [https://openai.com/policies/api-data-usage-policies](https://openai.com/policies/api-data-usage-policies)
+- [https://ollama.com](https://ollama.com)
 
 ## Koeiro API
 
