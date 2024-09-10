@@ -1,5 +1,5 @@
 import { wait } from "@/utils/wait";
-import { synthesizeVoice } from "../koeiromap/koeiromap";
+import { fetchVoice } from "@/features/speak/voicevox";
 import { Viewer } from "../vrmViewer/viewer";
 import { Screenplay } from "./messages";
 import { Talk } from "./messages";
@@ -45,19 +45,5 @@ const createSpeakCharacter = () => {
 export const speakCharacter = createSpeakCharacter();
 
 export const fetchAudio = async (talk: Talk): Promise<ArrayBuffer> => {
-  const ttsVoice = await synthesizeVoice(
-    talk.message,
-    talk.speakerX,
-    talk.speakerY,
-    talk.style,
-  );
-  const { url, params } = ttsVoice;
-
-  if (url == null) {
-    throw new Error("Something went wrong");
-  }
-
-  const resAudio = await fetch(url, params);
-  const buffer = await resAudio.arrayBuffer();
-  return buffer;
+  return await fetchVoice(talk.message, talk.speaker, talk.style);
 };

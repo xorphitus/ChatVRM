@@ -9,7 +9,10 @@ import {
 import { speakCharacter } from "@/features/messages/speakCharacter";
 import { MessageInputContainer } from "@/components/messageInputContainer";
 import { SYSTEM_PROMPT } from "@/features/constants/systemPromptConstants";
-import { KoeiroParam, DEFAULT_PARAM } from "@/features/constants/koeiroParam";
+import {
+  VoicevoxParam,
+  DEFAULT_PARAM,
+} from "@/features/constants/voicevoxParam";
 import { getChatResponseStream } from "@/features/chat/ollamaChat";
 import { M_PLUS_2, Montserrat } from "next/font/google";
 import { Introduction } from "@/components/introduction";
@@ -34,7 +37,8 @@ export default function Home() {
 
   const [systemPrompt, setSystemPrompt] = useState(SYSTEM_PROMPT);
   const [llmModel, setLlmModel] = useState("");
-  const [koeiroParam, setKoeiroParam] = useState<KoeiroParam>(DEFAULT_PARAM);
+  const [voicevoxParam, setVoicevoxParam] =
+    useState<VoicevoxParam>(DEFAULT_PARAM);
   const [chatProcessing, setChatProcessing] = useState(false);
   const [chatLog, setChatLog] = useState<Message[]>([]);
   const [assistantMessage, setAssistantMessage] = useState("");
@@ -147,7 +151,7 @@ export default function Home() {
             }
 
             const aiText = `${tag} ${sentence}`;
-            const aiTalks = textsToScreenplay([aiText], koeiroParam);
+            const aiTalks = textsToScreenplay([aiText], voicevoxParam);
             aiTextLog += aiText;
 
             // 文ごとに音声を生成 & 再生、返答を表示
@@ -173,7 +177,7 @@ export default function Home() {
       setChatLog(messageLogAssistant);
       setChatProcessing(false);
     },
-    [systemPrompt, chatLog, handleSpeakAi, llmModel, koeiroParam],
+    [systemPrompt, chatLog, handleSpeakAi, llmModel, voicevoxParam],
   );
 
   return (
@@ -189,12 +193,12 @@ export default function Home() {
         llmModel={llmModel}
         systemPrompt={systemPrompt}
         chatLog={chatLog}
-        koeiroParam={koeiroParam}
+        voicevoxParam={voicevoxParam}
         assistantMessage={assistantMessage}
         onChangeLlmModel={setLlmModel}
         onChangeSystemPrompt={setSystemPrompt}
         onChangeChatLog={handleChangeChatLog}
-        onChangeKoeiromapParam={setKoeiroParam}
+        onChangeVoicevoxParam={setVoicevoxParam}
       />
       <GitHubLink />
     </div>

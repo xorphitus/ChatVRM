@@ -11,7 +11,7 @@ ChatVRMの各機能は主に以下の技術を使用しています。
 - 返答文の生成
   - [Ollama](https://ollama.com)
 - 読み上げ音声の生成
-  - [Koeiro API](http://koeiromap.rinna.jp/)
+  - [VOICEVOX](https://voicevox.hiroshiba.jp)
 - 3Dキャラクターの表示
   - [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)
 
@@ -55,10 +55,10 @@ Ollamaの仕様や利用規約については以下のリンクや公式サイ�
 
 - [https://ollama.com](https://ollama.com)
 
-## Koeiro API
+## VOICEVOX
 
-ChatVRMでは返答文の音声読み上げにKoeiro APIを使用しています。
+ChatVRMでは返答文の音声読み上げにVOICEVOXを使用しています。
 
-Koeiro APIの仕様や利用規約については以下のリンクや公式サイトをご確認ください。
+VOICEVOXの仕様や利用規約については以下のリンクや公式サイトをご確認ください。
 
-- [http://koeiromap.rinna.jp/](http://koeiromap.rinna.jp/)
+- [https://voicevox.hiroshiba.jp](https://voicevox.hiroshiba.jp)

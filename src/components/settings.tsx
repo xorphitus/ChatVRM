@@ -3,35 +3,35 @@ import { IconButton } from "./iconButton";
 import { TextButton } from "./textButton";
 import { Message } from "@/features/messages/messages";
 import {
-  KoeiroParam,
+  VoicevoxParam,
   PRESET_A,
   PRESET_B,
   PRESET_C,
   PRESET_D,
-} from "@/features/constants/koeiroParam";
+} from "@/features/constants/voicevoxParam";
 
 type Props = {
   llmModel: string;
   systemPrompt: string;
   chatLog: Message[];
-  koeiroParam: KoeiroParam;
+  voicevoxParam: VoicevoxParam;
   onClickClose: () => void;
   onChangeLlmModel: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeSystemPrompt: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onChangeChatLog: (index: number, text: string) => void;
-  onChangeKoeiroParam: (x: number, y: number) => void;
+  onChangeVoicevoxParam: (speaker: number) => void;
   onClickOpenVrmFile: () => void;
 };
 export const Settings = ({
   llmModel,
   chatLog,
   systemPrompt,
-  koeiroParam,
+  voicevoxParam,
   onClickClose,
   onChangeSystemPrompt,
   onChangeLlmModel,
   onChangeChatLog,
-  onChangeKoeiroParam,
+  onChangeVoicevoxParam,
   onClickOpenVrmFile,
 }: Props) => {
   return (
@@ -81,77 +81,53 @@ export const Settings = ({
           <div className="my-40">
             <div className="my-16 typography-20 font-bold">声の調整</div>
             <div>
-              Koeiro APIを使用しています。詳しくは
+              VOICEVOXを使用しています。詳しくは
               <a
                 className="text-primary hover:text-primary-hover"
                 target="_blank"
                 rel="noopener noreferrer"
-                href="http://koeiromap.rinna.jp"
+                href="https://voicevox.hiroshiba.jp"
               >
-                http://koeiromap.rinna.jp
+                https://voicevox.hiroshiba.jp
               </a>
               をご覧ください。
             </div>
             <div className="mt-16">プリセット</div>
             <div className="my-8 grid grid-cols-2 gap-[8px]">
               <TextButton
-                onClick={() =>
-                  onChangeKoeiroParam(PRESET_A.speakerX, PRESET_A.speakerY)
-                }
+                onClick={() => onChangeVoicevoxParam(PRESET_A.speaker)}
               >
                 かわいい
               </TextButton>
               <TextButton
-                onClick={() =>
-                  onChangeKoeiroParam(PRESET_B.speakerX, PRESET_B.speakerY)
-                }
+                onClick={() => onChangeVoicevoxParam(PRESET_B.speaker)}
               >
                 元気
               </TextButton>
               <TextButton
-                onClick={() =>
-                  onChangeKoeiroParam(PRESET_C.speakerX, PRESET_C.speakerY)
-                }
+                onClick={() => onChangeVoicevoxParam(PRESET_C.speaker)}
               >
                 かっこいい
               </TextButton>
               <TextButton
-                onClick={() =>
-                  onChangeKoeiroParam(PRESET_D.speakerX, PRESET_D.speakerY)
-                }
+                onClick={() => onChangeVoicevoxParam(PRESET_D.speaker)}
               >
                 渋い
               </TextButton>
             </div>
             <div className="my-24">
-              <div className="select-none">x : {koeiroParam.speakerX}</div>
+              <div className="select-none">
+                Speaker : {voicevoxParam.speaker}
+              </div>
               <input
                 type="range"
-                min={-3}
-                max={3}
-                step={0.001}
-                value={koeiroParam.speakerX}
+                min={0}
+                max={100}
+                step={1}
+                value={voicevoxParam.speaker}
                 className="mt-8 mb-16 input-range"
                 onChange={(e) => {
-                  onChangeKoeiroParam(
-                    Number(e.target.value),
-                    koeiroParam.speakerY,
-                  );
-                }}
-              ></input>
-              <div className="select-none">y : {koeiroParam.speakerY}</div>
-              <input
-                type="range"
-                min={-3}
-                max={3}
-                step={0.001}
-                value={koeiroParam.speakerY}
-                className="mt-8 mb-16 input-range"
-                onChange={(e) => {
-                  onChangeKoeiroParam(
-                    koeiroParam.speakerX,
-                    Number(e.target.value),
-                  );
+                  onChangeVoicevoxParam(Number(e.target.value));
                 }}
               ></input>
             </div>

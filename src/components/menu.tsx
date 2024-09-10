@@ -1,6 +1,6 @@
 import { IconButton } from "./iconButton";
 import { Message } from "@/features/messages/messages";
-import { KoeiroParam } from "@/features/constants/koeiroParam";
+import { VoicevoxParam } from "@/features/constants/voicevoxParam";
 import { ChatLog } from "./chatLog";
 import React, { useCallback, useContext, useRef, useState } from "react";
 import { Settings } from "./settings";
@@ -11,23 +11,23 @@ type Props = {
   llmModel: string;
   systemPrompt: string;
   chatLog: Message[];
-  koeiroParam: KoeiroParam;
+  voicevoxParam: VoicevoxParam;
   assistantMessage: string;
   onChangeSystemPrompt: (systemPrompt: string) => void;
   onChangeLlmModel: (key: string) => void;
   onChangeChatLog: (index: number, text: string) => void;
-  onChangeKoeiromapParam: (param: KoeiroParam) => void;
+  onChangeVoicevoxParam: (param: VoicevoxParam) => void;
 };
 export const Menu = ({
   llmModel,
   systemPrompt,
   chatLog,
-  koeiroParam,
+  voicevoxParam,
   assistantMessage,
   onChangeSystemPrompt,
   onChangeLlmModel,
   onChangeChatLog,
-  onChangeKoeiromapParam,
+  onChangeVoicevoxParam,
 }: Props) => {
   const [showSettings, setShowSettings] = useState(false);
   const [showChatLog, setShowChatLog] = useState(false);
@@ -48,14 +48,13 @@ export const Menu = ({
     [onChangeLlmModel],
   );
 
-  const handleChangeKoeiroParam = useCallback(
-    (x: number, y: number) => {
-      onChangeKoeiromapParam({
-        speakerX: x,
-        speakerY: y,
+  const handleChangeVoicevoxParam = useCallback(
+    (speaker: number) => {
+      onChangeVoicevoxParam({
+        speaker,
       });
     },
-    [onChangeKoeiromapParam],
+    [onChangeVoicevoxParam],
   );
 
   const handleClickOpenVrmFile = useCallback(() => {
@@ -117,12 +116,12 @@ export const Menu = ({
           llmModel={llmModel}
           chatLog={chatLog}
           systemPrompt={systemPrompt}
-          koeiroParam={koeiroParam}
+          voicevoxParam={voicevoxParam}
           onClickClose={() => setShowSettings(false)}
           onChangeLlmModel={handleLlmModelChange}
           onChangeSystemPrompt={handleChangeSystemPrompt}
           onChangeChatLog={onChangeChatLog}
-          onChangeKoeiroParam={handleChangeKoeiroParam}
+          onChangeVoicevoxParam={handleChangeVoicevoxParam}
           onClickOpenVrmFile={handleClickOpenVrmFile}
         />
       )}

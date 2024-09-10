@@ -39,7 +39,7 @@ export const Introduction = ({ llmModel, onChangeLlmModel }: Props) => {
             、 会話文生成には
             <Link url={"https://ollama.com"} label={"Ollama"} />
             音声合成には
-            <Link url={"http://koeiromap.rinna.jp/"} label={"Koeiro API"} />
+            <Link url={"https://voicevox.hiroshiba.jp"} label={"VOICEVOX"} />
             を使用しています。
           </div>
         </div>
