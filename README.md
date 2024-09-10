@@ -1,32 +1,23 @@
 # ChatVRM
 
-ChatVRMはブラウザで簡単に3Dキャラクターと会話ができるデモアプリケーションです。
+これはPixiv様の[ChatVRM](https://github.com/pixiv/ChatVRM)をフォークし、ChatGPTをOllamaに、KoemotionをVOICEVOXに変更してバックエンドをOSSで再構成したものです。
 
-VRMファイルをインポートしてキャラクターに合わせた声の調整や、感情表現を含んだ返答文の生成などを行うことができます。
+ユーザの音声認識には引き続きWeb Speech API(SpeechRecognition)を使用しているため、プライバシー保護を主眼として本OSSを用いるのであればテキストによる入力を使用してください。
 
-ChatVRMの各機能は主に以下の技術を使用しています。
+## 事前準備
 
-- ユーザーの音声の認識
-  - [Web Speech API(SpeechRecognition)](https://developer.mozilla.org/ja/docs/Web/API/SpeechRecognition)
-- 返答文の生成
-  - [Ollama](https://ollama.com)
-- 読み上げ音声の生成
-  - [VOICEVOX](https://voicevox.hiroshiba.jp)
-- 3Dキャラクターの表示
-  - [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)
+1. [Ollama](https://ollama.com)をインストールおよび起動し、必要なモデルをpullしてください
+2. [VOICEVOX](https://voicevox.hiroshiba.jp)をインストールおよび起動してください
+  - 技術的にはVOICEBOXのエンジンさえ起動していれば動作するため、GUIの起動は必須ではありません
 
-## デモ
-
-GitHub Pagesでデモを公開しています。
-
-[https://pixiv.github.io/ChatVRM](https://pixiv.github.io/ChatVRM)
+Ollama、VOICEVOXともに仕様や利用規約については公式サイトをご確認ください。
 
 ## 実行
 
 ローカル環境で実行する場合はこのリポジトリをクローンするか、ダウンロードしてください。
 
 ```bash
-git clone git@github.com:pixiv/ChatVRM.git
+git clone git@github.com:xorphitus/ChatVRM.git
 ```
 
 必要なパッケージをインストールしてください。
@@ -44,21 +35,3 @@ npm run dev
 実行後、以下のURLにアクセスして動作を確認して下さい。
 
 [http://localhost:3000](http://localhost:3000)
-
----
-
-## Ollama
-
-ChatVRMでは返答文の生成にOllamaをHTTP API経由で使用しています。
-
-Ollamaの仕様や利用規約については以下のリンクや公式サイトをご確認ください。
-
-- [https://ollama.com](https://ollama.com)
-
-## VOICEVOX
-
-ChatVRMでは返答文の音声読み上げにVOICEVOXを使用しています。
-
-VOICEVOXの仕様や利用規約については以下のリンクや公式サイトをご確認ください。
-
-- [https://voicevox.hiroshiba.jp](https://voicevox.hiroshiba.jp)
