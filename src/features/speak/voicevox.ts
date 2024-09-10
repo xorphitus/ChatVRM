@@ -31,40 +31,40 @@ function styleToParameters(style: TalkStyle) {
 
   switch (style) {
     case "angry":
-        parameters = {
-            speedScale: 1,
-            pitchScale: -0.15,
-            intonationScale: 0.8,
-        };
-        break;
+      parameters = {
+        speedScale: 1,
+        pitchScale: -0.15,
+        intonationScale: 0.8,
+      };
+      break;
     case "fear":
-        parameters = {
-            speedScale: 1.3,
-            pitchScale: 0.12,
-            intonationScale: 1.5,
-        };
-        break;
+      parameters = {
+        speedScale: 1.3,
+        pitchScale: 0.12,
+        intonationScale: 1.5,
+      };
+      break;
     case "surprised":
-        parameters = {
-            speedScale: 1.3,
-            pitchScale: 0.1,
-            intonationScale: 1.5,
-        };
-        break;
+      parameters = {
+        speedScale: 1.3,
+        pitchScale: 0.1,
+        intonationScale: 1.5,
+      };
+      break;
     case "happy":
-        parameters = {
-            speedScale: 1.1,
-            pitchScale: 0.07,
-            intonationScale: 1.3,
-        };
-        break;
+      parameters = {
+        speedScale: 1.1,
+        pitchScale: 0.07,
+        intonationScale: 1.3,
+      };
+      break;
     case "sad":
-        parameters = {
-            speedScale: 0.9,
-            pitchScale: -0.15,
-            intonationScale: 0.9,
-        };
-        break;
+      parameters = {
+        speedScale: 0.9,
+        pitchScale: -0.15,
+        intonationScale: 0.9,
+      };
+      break;
     default:
       break;
   }

@@ -2,9 +2,7 @@ import React from "react";
 import { IconButton } from "./iconButton";
 import { TextButton } from "./textButton";
 import { Message } from "@/features/messages/messages";
-import {
-  VoicevoxParam,
-} from "@/features/constants/voicevoxParam";
+import { VoicevoxParam } from "@/features/constants/voicevoxParam";
 
 type Props = {
   llmModel: string;

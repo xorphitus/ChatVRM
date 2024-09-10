@@ -1,5 +1,5 @@
 import { useContext, useCallback } from "react";
-import { ViewerContext } from "../features/vrmViewer/viewerContext";
+import { ViewerContext } from "@/features/vrmViewer/viewerContext";
 import { buildUrl } from "@/utils/buildUrl";
 
 export default function VrmViewer() {

@@ -163,12 +163,4 @@ export class VRMLookAtSmoother extends VRMLookAt {
       this.applier.applyYawPitch(this._yaw, this._pitch);
     }
   }
-
-  /** renderしたあとに叩いて頭の回転をもとに戻す */
-  public revertFirstPersonBoneQuat(): void {
-    if (this.userTarget) {
-      const head = this.humanoid.getNormalizedBoneNode("head")!;
-      head.quaternion.copy(this._tempFirstPersonBoneQuat);
-    }
-  }
 }

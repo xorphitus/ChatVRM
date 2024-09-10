@@ -123,7 +123,7 @@ export default function Home() {
           receivedMessage += value;
 
           // 返答内容のタグ部分の検出
-          const tagMatch = receivedMessage.match(/^\[(.*?)\]/);
+          const tagMatch = receivedMessage.match(/^\[(.*?)]/);
           if (tagMatch && tagMatch[0]) {
             tag = tagMatch[0];
             receivedMessage = receivedMessage.slice(tag.length);
@@ -143,7 +143,7 @@ export default function Home() {
             // 発話不要/不可能な文字列だった場合はスキップ
             if (
               !sentence.replace(
-                /^[\s\[\(\{「［（【『〈《〔｛«‹〘〚〛〙›»〕》〉』】）］」\}\)\]]+$/g,
+                /^[\s\[({「［（【『〈《〔｛«‹〘〚〛〙›»〕》〉』】）］」})\]]+$/g,
                 "",
               )
             ) {
