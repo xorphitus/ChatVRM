@@ -4,10 +4,6 @@ import { TextButton } from "./textButton";
 import { Message } from "@/features/messages/messages";
 import {
   VoicevoxParam,
-  PRESET_A,
-  PRESET_B,
-  PRESET_C,
-  PRESET_D,
 } from "@/features/constants/voicevoxParam";
 
 type Props = {
@@ -91,29 +87,6 @@ export const Settings = ({
                 https://voicevox.hiroshiba.jp
               </a>
               をご覧ください。
-            </div>
-            <div className="mt-16">プリセット</div>
-            <div className="my-8 grid grid-cols-2 gap-[8px]">
-              <TextButton
-                onClick={() => onChangeVoicevoxParam(PRESET_A.speaker)}
-              >
-                かわいい
-              </TextButton>
-              <TextButton
-                onClick={() => onChangeVoicevoxParam(PRESET_B.speaker)}
-              >
-                元気
-              </TextButton>
-              <TextButton
-                onClick={() => onChangeVoicevoxParam(PRESET_C.speaker)}
-              >
-                かっこいい
-              </TextButton>
-              <TextButton
-                onClick={() => onChangeVoicevoxParam(PRESET_D.speaker)}
-              >
-                渋い
-              </TextButton>
             </div>
             <div className="my-24">
               <div className="select-none">
