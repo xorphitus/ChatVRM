@@ -12,7 +12,7 @@ export const Introduction = ({ openAiKey, onChangeAiKey }: Props) => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       onChangeAiKey(event.target.value);
     },
-    [onChangeAiKey]
+    [onChangeAiKey],
   );
 
   return opened ? (

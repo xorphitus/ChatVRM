@@ -98,7 +98,7 @@ export class Viewer {
     // camera controls
     this._cameraControls = new OrbitControls(
       this._camera,
-      this._renderer.domElement
+      this._renderer.domElement,
     );
     this._cameraControls.screenSpacePanning = true;
     this._cameraControls.update();
@@ -122,7 +122,7 @@ export class Viewer {
     this._renderer.setPixelRatio(window.devicePixelRatio);
     this._renderer.setSize(
       parentElement.clientWidth,
-      parentElement.clientHeight
+      parentElement.clientHeight,
     );
 
     if (!this._camera) return;
@@ -142,7 +142,7 @@ export class Viewer {
       this._camera?.position.set(
         this._camera.position.x,
         headWPos.y,
-        this._camera.position.z
+        this._camera.position.z,
       );
       this._cameraControls?.target.set(headWPos.x, headWPos.y, headWPos.z);
       this._cameraControls?.update();

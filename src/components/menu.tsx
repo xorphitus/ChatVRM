@@ -38,14 +38,14 @@ export const Menu = ({
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       onChangeSystemPrompt(event.target.value);
     },
-    [onChangeSystemPrompt]
+    [onChangeSystemPrompt],
   );
 
   const handleAiKeyChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       onChangeAiKey(event.target.value);
     },
-    [onChangeAiKey]
+    [onChangeAiKey],
   );
 
   const handleChangeKoeiroParam = useCallback(
@@ -55,7 +55,7 @@ export const Menu = ({
         speakerY: y,
       });
     },
-    [onChangeKoeiromapParam]
+    [onChangeKoeiromapParam],
   );
 
   const handleClickOpenVrmFile = useCallback(() => {
@@ -80,7 +80,7 @@ export const Menu = ({
 
       event.target.value = "";
     },
-    [viewer]
+    [viewer],
   );
 
   return (

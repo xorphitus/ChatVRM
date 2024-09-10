@@ -6,7 +6,7 @@ export async function synthesizeVoice(
   message: string,
   speaker_x: number,
   speaker_y: number,
-  style: TalkStyle
+  style: TalkStyle,
 ) {
   const param = {
     method: "POST",
@@ -18,7 +18,7 @@ export async function synthesizeVoice(
 
   const koeiroRes = await fetch(
     `${VOICEVOX_URL}/audio_query?${queryParams.toString()}`,
-    param
+    param,
   );
 
   const data = (await koeiroRes.json()) as any;
@@ -31,9 +31,9 @@ export async function synthesizeVoice(
     params: {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }
+    },
   };
 }

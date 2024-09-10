@@ -34,7 +34,7 @@ export class VRMAnimationLoaderPlugin implements GLTFLoaderPlugin {
 
   public constructor(
     parser: GLTFParser,
-    options?: VRMAnimationLoaderPluginOptions
+    options?: VRMAnimationLoaderPluginOptions,
   ) {
     this.parser = parser;
   }
@@ -65,13 +65,13 @@ export class VRMAnimationLoaderPlugin implements GLTFLoaderPlugin {
     const nodeMap = this._createNodeMap(defExtension);
     const worldMatrixMap = await this._createBoneWorldMatrixMap(
       gltf,
-      defExtension
+      defExtension,
     );
 
     const hipsNode = defExtension.humanoid.humanBones["hips"]!.node;
     const hips = (await gltf.parser.getDependency(
       "node",
-      hipsNode
+      hipsNode,
     )) as THREE.Object3D;
     const restHipsPosition = hips.getWorldPosition(new THREE.Vector3());
 
@@ -83,7 +83,7 @@ export class VRMAnimationLoaderPlugin implements GLTFLoaderPlugin {
         clip,
         defAnimation,
         nodeMap,
-        worldMatrixMap
+        worldMatrixMap,
       );
       animation.restHipsPosition = restHipsPosition;
 
@@ -94,7 +94,7 @@ export class VRMAnimationLoaderPlugin implements GLTFLoaderPlugin {
   }
 
   private _createNodeMap(
-    defExtension: VRMCVRMAnimation
+    defExtension: VRMCVRMAnimation,
   ): VRMAnimationLoaderPluginNodeMap {
     const humanoidIndexToName: Map<number, VRMHumanBoneName> = new Map();
     const expressionsIndexToName: Map<number, string> = new Map();
@@ -137,19 +137,19 @@ export class VRMAnimationLoaderPlugin implements GLTFLoaderPlugin {
 
   private async _createBoneWorldMatrixMap(
     gltf: GLTF,
-    defExtension: VRMCVRMAnimation
+    defExtension: VRMCVRMAnimation,
   ): Promise<VRMAnimationLoaderPluginWorldMatrixMap> {
     // update the entire hierarchy first
     gltf.scene.updateWorldMatrix(false, true);
 
     const threeNodes = (await gltf.parser.getDependencies(
-      "node"
+      "node",
     )) as THREE.Object3D[];
 
     const worldMatrixMap: VRMAnimationLoaderPluginWorldMatrixMap = new Map();
 
     for (const [boneName, { node }] of Object.entries(
-      defExtension.humanoid.humanBones
+      defExtension.humanoid.humanBones,
     )) {
       const threeNode = threeNodes[node];
       worldMatrixMap.set(boneName as VRMHumanBoneName, threeNode.matrixWorld);
@@ -157,7 +157,7 @@ export class VRMAnimationLoaderPlugin implements GLTFLoaderPlugin {
       if (boneName === "hips") {
         worldMatrixMap.set(
           "hipsParent",
-          threeNode.parent?.matrixWorld ?? MAT4_IDENTITY
+          threeNode.parent?.matrixWorld ?? MAT4_IDENTITY,
         );
       }
     }
@@ -169,7 +169,7 @@ export class VRMAnimationLoaderPlugin implements GLTFLoaderPlugin {
     animationClip: THREE.AnimationClip,
     defAnimation: GLTFSchema.IAnimation,
     nodeMap: VRMAnimationLoaderPluginNodeMap,
-    worldMatrixMap: VRMAnimationLoaderPluginWorldMatrixMap
+    worldMatrixMap: VRMAnimationLoaderPluginWorldMatrixMap,
   ): VRMAnimation {
     const tracks = animationClip.tracks;
     const defChannels = defAnimation.channels;
@@ -203,7 +203,7 @@ export class VRMAnimationLoaderPlugin implements GLTFLoaderPlugin {
           const hipsParentWorldMatrix = worldMatrixMap.get("hipsParent")!;
 
           const trackValues = arrayChunk(origTrack.values, 3).flatMap((v) =>
-            _v3A.fromArray(v).applyMatrix4(hipsParentWorldMatrix).toArray()
+            _v3A.fromArray(v).applyMatrix4(hipsParentWorldMatrix).toArray(),
           );
 
           const track = origTrack.clone();
@@ -222,7 +222,7 @@ export class VRMAnimationLoaderPlugin implements GLTFLoaderPlugin {
           _quatB.setFromRotationMatrix(parentWorldMatrix).normalize();
 
           const trackValues = arrayChunk(origTrack.values, 4).flatMap((q) =>
-            _quatC.fromArray(q).premultiply(_quatB).multiply(_quatA).toArray()
+            _quatC.fromArray(q).premultiply(_quatB).multiply(_quatA).toArray(),
           );
 
           const track = origTrack.clone();
@@ -248,7 +248,7 @@ export class VRMAnimationLoaderPlugin implements GLTFLoaderPlugin {
           const newTrack = new THREE.NumberKeyframeTrack(
             `${expressionName}.weight`,
             times as any,
-            values as any
+            values as any,
           );
           result.expressionTracks.set(expressionName, newTrack);
         } else {

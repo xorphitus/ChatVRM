@@ -38,7 +38,7 @@ export default function VrmViewer() {
         });
       }
     },
-    [viewer]
+    [viewer],
   );
 
   return (

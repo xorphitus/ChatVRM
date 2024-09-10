@@ -42,7 +42,7 @@ export const splitSentence = (text: string): string[] => {
 
 export const textsToScreenplay = (
   texts: string[],
-  koeiroParam: KoeiroParam
+  koeiroParam: KoeiroParam,
 ): Screenplay[] => {
   const screenplays: Screenplay[] = [];
   let prevExpression = "neutral";

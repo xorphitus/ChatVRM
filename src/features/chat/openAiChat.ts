@@ -1,10 +1,10 @@
 import { Message } from "../messages/messages";
 
-const OLLAMA_URL = "http://localhost:11434/api/chat"
+const OLLAMA_URL = "http://localhost:11434/api/chat";
 
 export async function getChatResponseStream(
   messages: Message[],
-  apiKey: string
+  apiKey: string,
 ) {
   if (!apiKey) {
     throw new Error("Invalid API Key");

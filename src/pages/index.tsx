@@ -47,7 +47,7 @@ export default function Home() {
 
       setChatLog(newChatLog);
     },
-    [chatLog]
+    [chatLog],
   );
 
   /**
@@ -57,11 +57,11 @@ export default function Home() {
     async (
       screenplay: Screenplay,
       onStart?: () => void,
-      onEnd?: () => void
+      onEnd?: () => void,
     ) => {
       speakCharacter(screenplay, viewer, onStart, onEnd);
     },
-    [viewer]
+    [viewer],
   );
 
   /**
@@ -99,7 +99,7 @@ export default function Home() {
         (e) => {
           console.error(e);
           return null;
-        }
+        },
       );
       if (stream == null) {
         setChatProcessing(false);
@@ -127,7 +127,7 @@ export default function Home() {
 
           // 返答を一文単位で切り出して処理する
           const sentenceMatch = receivedMessage.match(
-            /^(.+[。．！？\n]|.{10,}[、,])/
+            /^(.+[。．！？\n]|.{10,}[、,])/,
           );
           if (sentenceMatch && sentenceMatch[0]) {
             const sentence = sentenceMatch[0];
@@ -140,7 +140,7 @@ export default function Home() {
             if (
               !sentence.replace(
                 /^[\s\[\(\{「［（【『〈《〔｛«‹〘〚〛〙›»〕》〉』】）］」\}\)\]]+$/g,
-                ""
+                "",
               )
             ) {
               continue;
@@ -173,7 +173,7 @@ export default function Home() {
       setChatLog(messageLogAssistant);
       setChatProcessing(false);
     },
-    [systemPrompt, chatLog, handleSpeakAi, openAiKey, koeiroParam]
+    [systemPrompt, chatLog, handleSpeakAi, openAiKey, koeiroParam],
   );
 
   return (

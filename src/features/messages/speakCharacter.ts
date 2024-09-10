@@ -13,7 +13,7 @@ const createSpeakCharacter = () => {
     screenplay: Screenplay,
     viewer: Viewer,
     onStart?: () => void,
-    onComplete?: () => void
+    onComplete?: () => void,
   ) => {
     const fetchPromise = prevFetchPromise.then(async () => {
       const now = Date.now();
@@ -27,18 +27,20 @@ const createSpeakCharacter = () => {
     });
 
     prevFetchPromise = fetchPromise;
-    prevSpeakPromise = Promise.all([fetchPromise, prevSpeakPromise]).then(([audioBuffer]) => {
-      onStart?.();
-      if (!audioBuffer) {
-        return;
-      }
-      return viewer.model?.speak(audioBuffer, screenplay);
-    });
+    prevSpeakPromise = Promise.all([fetchPromise, prevSpeakPromise]).then(
+      ([audioBuffer]) => {
+        onStart?.();
+        if (!audioBuffer) {
+          return;
+        }
+        return viewer.model?.speak(audioBuffer, screenplay);
+      },
+    );
     prevSpeakPromise.then(() => {
       onComplete?.();
     });
   };
-}
+};
 
 export const speakCharacter = createSpeakCharacter();
 
@@ -47,9 +49,9 @@ export const fetchAudio = async (talk: Talk): Promise<ArrayBuffer> => {
     talk.message,
     talk.speakerX,
     talk.speakerY,
-    talk.style
+    talk.style,
   );
-  const {url, params} = ttsVoice;
+  const { url, params } = ttsVoice;
 
   if (url == null) {
     throw new Error("Something went wrong");

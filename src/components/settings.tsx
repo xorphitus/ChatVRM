@@ -147,7 +147,7 @@ export const Settings = ({
                 onChange={(e) => {
                   onChangeKoeiroParam(
                     Number(e.target.value),
-                    koeiroParam.speakerY
+                    koeiroParam.speakerY,
                   );
                 }}
               ></input>
@@ -162,7 +162,7 @@ export const Settings = ({
                 onChange={(e) => {
                   onChangeKoeiroParam(
                     koeiroParam.speakerX,
-                    Number(e.target.value)
+                    Number(e.target.value),
                   );
                 }}
               ></input>

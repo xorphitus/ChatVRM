@@ -34,7 +34,7 @@ export const MessageInputContainer = ({
         onChatProcessStart(text);
       }
     },
-    [onChatProcessStart]
+    [onChatProcessStart],
   );
 
   // 無音が続いた場合も終了する
