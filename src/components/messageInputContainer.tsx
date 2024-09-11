@@ -54,7 +54,7 @@ export const MessageInputContainer = ({
     setIsMicRecording(true);
   }, [isMicRecording, speechRecognition]);
 
-  const handleClickSendButton = useCallback(() => {
+  const handleMessageSend = useCallback(() => {
     onChatProcessStart(userMessage);
   }, [onChatProcessStart, userMessage]);
 
@@ -86,7 +86,7 @@ export const MessageInputContainer = ({
       isMicRecording={isMicRecording}
       onChangeUserMessage={(e) => setUserMessage(e.target.value)}
       onClickMicButton={handleClickMicButton}
-      onClickSendButton={handleClickSendButton}
+      handleMessageSend={handleMessageSend}
     />
   );
 };
