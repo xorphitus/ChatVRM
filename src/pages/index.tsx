@@ -90,11 +90,16 @@ export default function Home() {
       ];
       setChatLog(messageLog);
 
-      // Chat GPTへ
+      // Ollamaへ
       const messages: Message[] = [
         {
           role: "system",
           content: systemPrompt,
+        },
+        // 最低限の時間と場所に関する情報をコンテキストとして付与
+        {
+          role: "system",
+          content: `現在 ${Date()} の時刻と地域で会話しています。挨拶をする場合は時刻と季節を踏まえた内容にしてください。`,
         },
         ...messageLog,
       ];
