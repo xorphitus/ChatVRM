@@ -61,6 +61,9 @@ export const MessageInputContainer = ({
   useEffect(() => {
     const SpeechRecognition =
       window.webkitSpeechRecognition || window.SpeechRecognition;
+    if (!SpeechRecognition) {
+      return;
+    }
 
     const recognition = new SpeechRecognition();
     recognition.lang = "ja-JP";

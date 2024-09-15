@@ -15,7 +15,8 @@ export async function getChatResponseStream(
     body: JSON.stringify({
       model,
       messages,
-      stream: true,
+      // See https://github.com/tauri-apps/tauri/discussions/6613
+      stream: !(window as any).__TAURI__,
     }),
   });
 
