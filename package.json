@@ -9,7 +9,8 @@
     "export": "next export",
     "lint": "next lint",
     "lint:format": "prettier --check \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
-    "format": "prettier --write \"{src,test}/**/*.{js,jsx,ts,tsx}\""
+    "format": "prettier --write \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
+    "test": "jest"
   },
   "dependencies": {
     "@charcoal-ui/icons": "^2.6.0",
@@ -28,16 +29,21 @@
   "devDependencies": {
     "@charcoal-ui/tailwind-config": "^2.6.0",
     "@gltf-transform/core": "^2.4.6",
+    "@jest/globals": "^29.7.0",
     "@pixiv/three-vrm": "^1.0.9",
+    "@types/jest": "^29.5.13",
     "@types/node": "18.15.10",
     "@types/react": "18.0.29",
     "@types/react-dom": "18.0.11",
     "@types/three": "0.149.0",
     "autoprefixer": "^10.4.14",
     "eslint-config-prettier": "^9.1.0",
+    "jest": "^29.7.0",
     "postcss": "8.4.31",
     "prettier": "3.3.3",
-    "tailwindcss": "^3.3.1"
+    "tailwindcss": "^3.3.1",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2"
   },
   "engines": {
     "node": "20.17.0"
