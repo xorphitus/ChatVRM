@@ -34,6 +34,30 @@ export type Screenplay = {
   talk: Talk;
 };
 
+export const parseMessage = (message: string) => {
+  const tagMatch = message.match(/^\[(.*?)]/);
+  let tag = "";
+  let body = "";
+  if (tagMatch && tagMatch[0]) {
+    tag = tagMatch[0];
+    body = message.slice(tag.length);
+  }
+
+  return { tag, body };
+};
+
+export const trimUnpronounceableCharacters = (message: string) => {
+  return message.replace(
+    /^[\s\[({「［（【『〈《〔｛«‹〘〚〛〙›»〕》〉』】）］」})\]]+$/g,
+    "",
+  );
+};
+
+export const matchSentence = (message: string): string => {
+  const match = message.match(/^(.+[。．！？\n]|.{10,}[、,])/);
+  return match ? match[0] : "";
+};
+
 export const textsToScreenplay = (
   texts: string[],
   voicevoxParam: VoicevoxParam,
