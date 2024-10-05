@@ -32,8 +32,8 @@ function styleToParameters(style: TalkStyle) {
   switch (style) {
     case "angry":
       parameters = {
-        speedScale: 1,
-        pitchScale: -0.15,
+        speedScale: 1.1,
+        pitchScale: -0.1,
         intonationScale: 0.8,
       };
       break;
@@ -61,7 +61,7 @@ function styleToParameters(style: TalkStyle) {
     case "sad":
       parameters = {
         speedScale: 0.9,
-        pitchScale: -0.15,
+        pitchScale: -0.12,
         intonationScale: 0.9,
       };
       break;
