@@ -14,8 +14,6 @@
   },
   "dependencies": {
     "@charcoal-ui/icons": "^4.0.0",
-    "@charcoal-ui/theme": "^4.0.0",
-    "@tailwindcss/line-clamp": "^0.4.4",
     "next": "^14.2.8",
     "node-fetch": "^3.3.1",
     "react": "18.2.0",
@@ -25,9 +23,11 @@
   },
   "devDependencies": {
     "@charcoal-ui/tailwind-config": "^4.0.0",
+    "@charcoal-ui/theme": "^4.0.0",
     "@gltf-transform/core": "^2.4.6",
     "@jest/globals": "^29.7.0",
     "@pixiv/three-vrm": "^1.0.9",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@types/dom-speech-recognition": "^0.0.4",
     "@types/jest": "^29.5.13",
     "@types/node": "18.15.10",
