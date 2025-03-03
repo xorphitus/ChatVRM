@@ -12,11 +12,15 @@ export async function getChatResponseStream(
 
   const res = await fetch(OLLAMA_URL, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       model,
       messages,
+      // Disable stream in Tauri
       // See https://github.com/tauri-apps/tauri/discussions/6613
-      stream: !(window as any).__TAURI__,
+      stream: !(window as any).__TAURI_INTERNALS__,
     }),
   });
 
