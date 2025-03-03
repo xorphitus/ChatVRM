@@ -1,6 +1,5 @@
 import { Message } from "../messages/messages";
-
-const OLLAMA_URL = "http://localhost:11434/api/chat";
+import {OLLAMA_URL} from "@/constants/api";
 
 export async function getChatResponseStream(
   messages: Message[],
@@ -10,7 +9,7 @@ export async function getChatResponseStream(
     throw new Error("LLM model is not set");
   }
 
-  const res = await fetch(OLLAMA_URL, {
+  const res = await fetch(OLLAMA_URL + "/api/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -1,6 +1,5 @@
 import { TalkStyle } from "../messages/messages";
-
-const VOICEVOX_URL = "http://localhost:50021";
+import { VOICEVOX_URL } from "@/constants/api";
 
 export async function fetchVoice(
   message: string,

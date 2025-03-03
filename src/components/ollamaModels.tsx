@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
+import {OLLAMA_URL} from "@/constants/api";
 
 type Props = {
   llmModel: string;
   onChangeLlmModel: (llmModel: string) => void;
 };
 
-const OLLAMA_URL= "http://localhost:11434";
 export const OllamaModels = ({ llmModel, onChangeLlmModel }: Props) => {
   const [options, setOptions] = useState<string[]>([]); // State to hold fetched options
   const [isLoading, setIsLoading] = useState(false); // State to handle loading
