@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Link } from "./link";
+import { OllamaModels } from "@/components/ollamaModels";
 
 type Props = {
   llmModel: string;
@@ -7,13 +8,6 @@ type Props = {
 };
 export const Introduction = ({ llmModel, onChangeLlmModel }: Props) => {
   const [opened, setOpened] = useState(true);
-
-  const handleLlmModelChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      onChangeLlmModel(event.target.value);
-    },
-    [onChangeLlmModel],
-  );
 
   return opened ? (
     <div className="absolute z-40 w-full h-full px-24 py-40  bg-black/30 font-M_PLUS_2">
@@ -52,21 +46,7 @@ export const Introduction = ({ llmModel, onChangeLlmModel }: Props) => {
             差別的または暴力的な発言、特定の人物を貶めるような発言を、意図的に誘導しないでください。また、VRMモデルを使ってキャラクターを差し替える際はモデルの利用条件に従ってください。
           </div>
         </div>
-        <div className="my-24">
-          <div className="my-8 font-bold typography-20 text-secondary">
-            LLMモデル名
-          </div>
-          <input
-            type="text"
-            placeholder="llama3.1:8b"
-            value={llmModel}
-            onChange={handleLlmModelChange}
-            className="my-4 px-16 py-8 w-full h-40 bg-surface3 hover:bg-surface3-hover rounded-4 text-ellipsis"
-          ></input>
-          <div>
-            LLMモデルはOllamaでpull済みのモデル名をフォームに入力してください。
-          </div>
-        </div>
+        <OllamaModels llmModel={llmModel} onChangeLlmModel={onChangeLlmModel} />
         <div className="my-24">
           <button
             onClick={() => {
@@ -74,7 +54,7 @@ export const Introduction = ({ llmModel, onChangeLlmModel }: Props) => {
             }}
             className="font-bold bg-secondary hover:bg-secondary-hover active:bg-secondary-press disabled:bg-secondary-disabled text-white px-24 py-8 rounded-oval"
           >
-            LLMモデル名を入力してはじめる
+            LLMモデルを設定してはじめる
           </button>
         </div>
       </div>

@@ -41,13 +41,6 @@ export const Menu = ({
     [onChangeSystemPrompt],
   );
 
-  const handleLlmModelChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      onChangeLlmModel(event.target.value);
-    },
-    [onChangeLlmModel],
-  );
-
   const handleChangeVoicevoxParam = useCallback(
     (speaker: number) => {
       onChangeVoicevoxParam({
@@ -118,7 +111,7 @@ export const Menu = ({
           systemPrompt={systemPrompt}
           voicevoxParam={voicevoxParam}
           onClickClose={() => setShowSettings(false)}
-          onChangeLlmModel={handleLlmModelChange}
+          onChangeLlmModel={onChangeLlmModel}
           onChangeSystemPrompt={handleChangeSystemPrompt}
           onChangeChatLog={onChangeChatLog}
           onChangeVoicevoxParam={handleChangeVoicevoxParam}

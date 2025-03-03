@@ -3,6 +3,7 @@ import { IconButton } from "./iconButton";
 import { TextButton } from "./textButton";
 import { Message } from "@/features/messages/messages";
 import { VoicevoxParam } from "@/features/constants/voicevoxParam";
+import { OllamaModels } from "@/components/ollamaModels";
 
 type Props = {
   llmModel: string;
@@ -10,7 +11,7 @@ type Props = {
   chatLog: Message[];
   voicevoxParam: VoicevoxParam;
   onClickClose: () => void;
-  onChangeLlmModel: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeLlmModel: (llmModel: string) => void;
   onChangeSystemPrompt: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onChangeChatLog: (index: number, text: string) => void;
   onChangeVoicevoxParam: (speaker: number) => void;
@@ -40,19 +41,10 @@ export const Settings = ({
       <div className="max-h-full overflow-auto">
         <div className="text-text1 max-w-3xl mx-auto px-24 py-64 ">
           <div className="my-24 typography-32 font-bold">設定</div>
-          <div className="my-24">
-            <div className="my-16 typography-20 font-bold">LLMモデル名</div>
-            <input
-              className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"
-              type="text"
-              placeholder="llama3.1:8b"
-              value={llmModel}
-              onChange={onChangeLlmModel}
-            />
-            <div>
-              LLMモデルはOllamaでpull済みのモデル名をフォームに入力してください。
-            </div>
-          </div>
+          <OllamaModels
+            llmModel={llmModel}
+            onChangeLlmModel={onChangeLlmModel}
+          />
           <div className="my-40">
             <div className="my-16 typography-20 font-bold">
               キャラクターモデル
