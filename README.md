@@ -35,3 +35,11 @@ npm run dev
 実行後、以下のURLにアクセスして動作を確認して下さい。
 
 [http://localhost:3000](http://localhost:3000)
+
+### デフォルトパーソナリティの変更
+
+```bash
+cp env.example .env
+```
+
+`.env`ファイルを編集し、`NEXT_PUBLIC_PERSONALITY`環境変数を変更してください。
