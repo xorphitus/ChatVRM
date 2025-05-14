@@ -43,3 +43,11 @@ cp env.example .env
 ```
 
 `.env`ファイルを編集し、`NEXT_PUBLIC_PERSONALITY`環境変数を変更してください。
+
+### Docker での実行
+`next dev` を走らせているので production でそのまま使用しないこと。
+
+```bash
+docker build -f Dockerfile.dev -t chatvrm:latest
+docker run -d -p 3000:3000 --name chatvrm chatvrm:latest
+```
