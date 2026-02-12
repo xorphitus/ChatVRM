@@ -2,46 +2,32 @@ import React from "react";
 import { IconButton } from "./iconButton";
 import { TextButton } from "./textButton";
 import { Message } from "@/features/messages/messages";
-import {
-  KoeiroParam,
-  PRESET_A,
-  PRESET_B,
-  PRESET_C,
-  PRESET_D,
-} from "@/features/constants/koeiroParam";
-import { Link } from "./link";
+import { VoicevoxParam } from "@/features/constants/voicevoxParam";
+import { OllamaModels } from "@/components/ollamaModels";
 
 type Props = {
-  openAiKey: string;
+  llmModel: string;
   systemPrompt: string;
   chatLog: Message[];
-  koeiroParam: KoeiroParam;
-  koeiromapKey: string;
+  voicevoxParam: VoicevoxParam;
   onClickClose: () => void;
-  onChangeAiKey: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeLlmModel: (llmModel: string) => void;
   onChangeSystemPrompt: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onChangeChatLog: (index: number, text: string) => void;
-  onChangeKoeiroParam: (x: number, y: number) => void;
+  onChangeVoicevoxParam: (speaker: number) => void;
   onClickOpenVrmFile: () => void;
-  onClickResetChatLog: () => void;
-  onClickResetSystemPrompt: () => void;
-  onChangeKoeiromapKey: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 export const Settings = ({
-  openAiKey,
+  llmModel,
   chatLog,
   systemPrompt,
-  koeiroParam,
-  koeiromapKey,
+  voicevoxParam,
   onClickClose,
   onChangeSystemPrompt,
-  onChangeAiKey,
+  onChangeLlmModel,
   onChangeChatLog,
-  onChangeKoeiroParam,
+  onChangeVoicevoxParam,
   onClickOpenVrmFile,
-  onClickResetChatLog,
-  onClickResetSystemPrompt,
-  onChangeKoeiromapKey,
 }: Props) => {
   return (
     <div className="absolute z-40 w-full h-full bg-white/80 backdrop-blur ">
@@ -55,30 +41,10 @@ export const Settings = ({
       <div className="max-h-full overflow-auto">
         <div className="text-text1 max-w-3xl mx-auto px-24 py-64 ">
           <div className="my-24 typography-32 font-bold">設定</div>
-          <div className="my-24">
-            <div className="my-16 typography-20 font-bold">OpenAI API キー</div>
-            <input
-              className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"
-              type="text"
-              placeholder="sk-..."
-              value={openAiKey}
-              onChange={onChangeAiKey}
-            />
-            <div>
-              APIキーは
-              <Link
-                url="https://platform.openai.com/account/api-keys"
-                label="OpenAIのサイト"
-              />
-              で取得できます。取得したAPIキーをフォームに入力してください。
-            </div>
-            <div className="my-16">
-              ChatGPT
-              APIはブラウザから直接アクセスしています。また、APIキーや会話内容はピクシブのサーバには保存されません。
-              <br />
-              ※利用しているモデルはChatGPT API (GPT-3.5)です。
-            </div>
-          </div>
+          <OllamaModels
+            llmModel={llmModel}
+            onChangeLlmModel={onChangeLlmModel}
+          />
           <div className="my-40">
             <div className="my-16 typography-20 font-bold">
               キャラクターモデル
@@ -88,13 +54,8 @@ export const Settings = ({
             </div>
           </div>
           <div className="my-40">
-            <div className="my-8">
-              <div className="my-16 typography-20 font-bold">
-                キャラクター設定（システムプロンプト）
-              </div>
-              <TextButton onClick={onClickResetSystemPrompt}>
-                キャラクター設定リセット
-              </TextButton>
+            <div className="my-16 typography-20 font-bold">
+              キャラクター設定（システムプロンプト）
             </div>
 
             <textarea
@@ -106,96 +67,37 @@ export const Settings = ({
           <div className="my-40">
             <div className="my-16 typography-20 font-bold">声の調整</div>
             <div>
-              KoemotionのKoeiromap APIを使用しています。詳しくは
-              <Link
-                url="https://koemotion.rinna.co.jp"
-                label="https://koemotion.rinna.co.jp"
-              />
+              VOICEVOXを使用しています。詳しくは
+              <a
+                className="text-primary hover:text-primary-hover"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://voicevox.hiroshiba.jp"
+              >
+                https://voicevox.hiroshiba.jp
+              </a>
               をご覧ください。
             </div>
-            <div className="mt-16 font-bold">API キー</div>
-            <div className="mt-8">
-              <input
-                className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"
-                type="text"
-                placeholder="..."
-                value={koeiromapKey}
-                onChange={onChangeKoeiromapKey}
-              />
-            </div>
-
-            <div className="mt-16 font-bold">プリセット</div>
-            <div className="my-8 grid grid-cols-2 gap-[8px]">
-              <TextButton
-                onClick={() =>
-                  onChangeKoeiroParam(PRESET_A.speakerX, PRESET_A.speakerY)
-                }
-              >
-                かわいい
-              </TextButton>
-              <TextButton
-                onClick={() =>
-                  onChangeKoeiroParam(PRESET_B.speakerX, PRESET_B.speakerY)
-                }
-              >
-                元気
-              </TextButton>
-              <TextButton
-                onClick={() =>
-                  onChangeKoeiroParam(PRESET_C.speakerX, PRESET_C.speakerY)
-                }
-              >
-                かっこいい
-              </TextButton>
-              <TextButton
-                onClick={() =>
-                  onChangeKoeiroParam(PRESET_D.speakerX, PRESET_D.speakerY)
-                }
-              >
-                渋い
-              </TextButton>
-            </div>
             <div className="my-24">
-              <div className="select-none">x : {koeiroParam.speakerX}</div>
+              <div className="select-none">
+                Speaker : {voicevoxParam.speaker}
+              </div>
               <input
                 type="range"
-                min={-10}
-                max={10}
-                step={0.001}
-                value={koeiroParam.speakerX}
+                min={0}
+                max={100}
+                step={1}
+                value={voicevoxParam.speaker}
                 className="mt-8 mb-16 input-range"
                 onChange={(e) => {
-                  onChangeKoeiroParam(
-                    Number(e.target.value),
-                    koeiroParam.speakerY
-                  );
-                }}
-              ></input>
-              <div className="select-none">y : {koeiroParam.speakerY}</div>
-              <input
-                type="range"
-                min={-10}
-                max={10}
-                step={0.001}
-                value={koeiroParam.speakerY}
-                className="mt-8 mb-16 input-range"
-                onChange={(e) => {
-                  onChangeKoeiroParam(
-                    koeiroParam.speakerX,
-                    Number(e.target.value)
-                  );
+                  onChangeVoicevoxParam(Number(e.target.value));
                 }}
               ></input>
             </div>
           </div>
           {chatLog.length > 0 && (
             <div className="my-40">
-              <div className="my-8 grid-cols-2">
-                <div className="my-16 typography-20 font-bold">会話履歴</div>
-                <TextButton onClick={onClickResetChatLog}>
-                  会話履歴リセット
-                </TextButton>
-              </div>
+              <div className="my-16 typography-20 font-bold">会話履歴</div>
               <div className="my-8">
                 {chatLog.map((value, index) => {
                   return (

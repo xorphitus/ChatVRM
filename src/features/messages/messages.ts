@@ -1,7 +1,7 @@
-import { VRMExpression, VRMExpressionPresetName } from "@pixiv/three-vrm";
-import { KoeiroParam } from "../constants/koeiroParam";
+import { VRMExpressionPresetName } from "@pixiv/three-vrm";
+import { VoicevoxParam } from "../constants/voicevoxParam";
 
-// ChatGPT API
+// Ollama API
 export type Message = {
   role: "assistant" | "system" | "user";
   content: string;
@@ -19,8 +19,7 @@ export type TalkStyle = (typeof talkStyles)[number];
 
 export type Talk = {
   style: TalkStyle;
-  speakerX: number;
-  speakerY: number;
+  speaker: number;
   message: string;
 };
 
@@ -35,25 +34,20 @@ export type Screenplay = {
   talk: Talk;
 };
 
-export const splitSentence = (text: string): string[] => {
-  const splitMessages = text.split(/(?<=[。．！？\n])/g);
-  return splitMessages.filter((msg) => msg !== "");
-};
-
 export const textsToScreenplay = (
   texts: string[],
-  koeiroParam: KoeiroParam
+  voicevoxParam: VoicevoxParam,
 ): Screenplay[] => {
   const screenplays: Screenplay[] = [];
   let prevExpression = "neutral";
   for (let i = 0; i < texts.length; i++) {
     const text = texts[i];
 
-    const match = text.match(/\[(.*?)\]/);
+    const match = text.match(/\[(.*?)]/);
 
     const tag = (match && match[1]) || prevExpression;
 
-    const message = text.replace(/\[(.*?)\]/g, "");
+    const message = text.replace(/\[(.*?)]/g, "");
 
     let expression = prevExpression;
     if (emotions.includes(tag as any)) {
@@ -65,8 +59,7 @@ export const textsToScreenplay = (
       expression: expression as EmotionType,
       talk: {
         style: emotionToTalkStyle(expression as EmotionType),
-        speakerX: koeiroParam.speakerX,
-        speakerY: koeiroParam.speakerY,
+        speaker: voicevoxParam.speaker,
         message: message,
       },
     });

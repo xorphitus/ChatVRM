@@ -1,3 +1,11 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "prettier"],
+  "overrides": [
+    {
+      "files": ["__test__/**/*"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }

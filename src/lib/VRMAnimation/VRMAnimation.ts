@@ -58,8 +58,8 @@ export class VRMAnimation {
           `${nodeName}.quaternion`,
           origTrack.times,
           origTrack.values.map((v, i) =>
-            metaVersion === "0" && i % 2 === 0 ? -v : v
-          )
+            metaVersion === "0" && i % 2 === 0 ? -v : v,
+          ),
         );
         tracks.push(track);
       }
@@ -76,7 +76,7 @@ export class VRMAnimation {
 
         const track = origTrack.clone();
         track.values = track.values.map(
-          (v, i) => (metaVersion === "0" && i % 3 !== 1 ? -v : v) * scale
+          (v, i) => (metaVersion === "0" && i % 3 !== 1 ? -v : v) * scale,
         );
         track.name = `${nodeName}.position`;
         tracks.push(track);
@@ -87,7 +87,7 @@ export class VRMAnimation {
   }
 
   public createExpressionTracks(
-    expressionManager: VRMExpressionManager
+    expressionManager: VRMExpressionManager,
   ): THREE.KeyframeTrack[] {
     const tracks: THREE.KeyframeTrack[] = [];
 

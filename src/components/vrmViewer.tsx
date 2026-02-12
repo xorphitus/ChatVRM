@@ -1,5 +1,5 @@
 import { useContext, useCallback } from "react";
-import { ViewerContext } from "../features/vrmViewer/viewerContext";
+import { ViewerContext } from "@/features/vrmViewer/viewerContext";
 import { buildUrl } from "@/utils/buildUrl";
 
 export default function VrmViewer() {
@@ -38,7 +38,7 @@ export default function VrmViewer() {
         });
       }
     },
-    [viewer]
+    [viewer],
   );
 
   return (

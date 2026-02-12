@@ -34,7 +34,7 @@ export const MessageInputContainer = ({
         onChatProcessStart(text);
       }
     },
-    [onChatProcessStart]
+    [onChatProcessStart],
   );
 
   // 無音が続いた場合も終了する
@@ -54,13 +54,16 @@ export const MessageInputContainer = ({
     setIsMicRecording(true);
   }, [isMicRecording, speechRecognition]);
 
-  const handleClickSendButton = useCallback(() => {
+  const handleMessageSend = useCallback(() => {
     onChatProcessStart(userMessage);
   }, [onChatProcessStart, userMessage]);
 
   useEffect(() => {
     const SpeechRecognition =
       window.webkitSpeechRecognition || window.SpeechRecognition;
+    if (!SpeechRecognition) {
+      return;
+    }
 
     // FirefoxなどSpeechRecognition非対応環境対策
     if (!SpeechRecognition) {
@@ -90,7 +93,7 @@ export const MessageInputContainer = ({
       isMicRecording={isMicRecording}
       onChangeUserMessage={(e) => setUserMessage(e.target.value)}
       onClickMicButton={handleClickMicButton}
-      onClickSendButton={handleClickSendButton}
+      handleMessageSend={handleMessageSend}
     />
   );
 };

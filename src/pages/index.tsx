@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import VrmViewer from "@/components/vrmViewer";
 import { ViewerContext } from "@/features/vrmViewer/viewerContext";
 import {
@@ -9,43 +9,39 @@ import {
 import { speakCharacter } from "@/features/messages/speakCharacter";
 import { MessageInputContainer } from "@/components/messageInputContainer";
 import { SYSTEM_PROMPT } from "@/features/constants/systemPromptConstants";
-import { KoeiroParam, DEFAULT_PARAM } from "@/features/constants/koeiroParam";
-import { getChatResponseStream } from "@/features/chat/openAiChat";
+import {
+  VoicevoxParam,
+  DEFAULT_PARAM,
+} from "@/features/constants/voicevoxParam";
+import { getChatResponseStream } from "@/features/chat/ollamaChat";
+import { M_PLUS_2, Montserrat } from "next/font/google";
 import { Introduction } from "@/components/introduction";
 import { Menu } from "@/components/menu";
 import { GitHubLink } from "@/components/githubLink";
 import { Meta } from "@/components/meta";
 
+const m_plus_2 = M_PLUS_2({
+  variable: "--font-m-plus-2",
+  display: "swap",
+  preload: false,
+});
+
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  display: "swap",
+  subsets: ["latin"],
+});
+
 export default function Home() {
   const { viewer } = useContext(ViewerContext);
 
   const [systemPrompt, setSystemPrompt] = useState(SYSTEM_PROMPT);
-  const [openAiKey, setOpenAiKey] = useState("");
-  const [koeiromapKey, setKoeiromapKey] = useState("");
-  const [koeiroParam, setKoeiroParam] = useState<KoeiroParam>(DEFAULT_PARAM);
+  const [llmModel, setLlmModel] = useState("");
+  const [voicevoxParam, setVoicevoxParam] =
+    useState<VoicevoxParam>(DEFAULT_PARAM);
   const [chatProcessing, setChatProcessing] = useState(false);
   const [chatLog, setChatLog] = useState<Message[]>([]);
   const [assistantMessage, setAssistantMessage] = useState("");
-
-  useEffect(() => {
-    if (window.localStorage.getItem("chatVRMParams")) {
-      const params = JSON.parse(
-        window.localStorage.getItem("chatVRMParams") as string
-      );
-      setSystemPrompt(params.systemPrompt ?? SYSTEM_PROMPT);
-      setKoeiroParam(params.koeiroParam ?? DEFAULT_PARAM);
-      setChatLog(params.chatLog ?? []);
-    }
-  }, []);
-
-  useEffect(() => {
-    process.nextTick(() =>
-      window.localStorage.setItem(
-        "chatVRMParams",
-        JSON.stringify({ systemPrompt, koeiroParam, chatLog })
-      )
-    );
-  }, [systemPrompt, koeiroParam, chatLog]);
 
   const handleChangeChatLog = useCallback(
     (targetIndex: number, text: string) => {
@@ -55,7 +51,7 @@ export default function Home() {
 
       setChatLog(newChatLog);
     },
-    [chatLog]
+    [chatLog],
   );
 
   /**
@@ -65,11 +61,11 @@ export default function Home() {
     async (
       screenplay: Screenplay,
       onStart?: () => void,
-      onEnd?: () => void
+      onEnd?: () => void,
     ) => {
-      speakCharacter(screenplay, viewer, koeiromapKey, onStart, onEnd);
+      speakCharacter(screenplay, viewer, onStart, onEnd);
     },
-    [viewer, koeiromapKey]
+    [viewer],
   );
 
   /**
@@ -77,8 +73,8 @@ export default function Home() {
    */
   const handleSendChat = useCallback(
     async (text: string) => {
-      if (!openAiKey) {
-        setAssistantMessage("APIキーが入力されていません");
+      if (!llmModel) {
+        setAssistantMessage("モデル名が入力されていません");
         return;
       }
 
@@ -94,20 +90,25 @@ export default function Home() {
       ];
       setChatLog(messageLog);
 
-      // Chat GPTへ
+      // Ollamaへ
       const messages: Message[] = [
         {
           role: "system",
           content: systemPrompt,
         },
+        // 最低限の時間と場所に関する情報をコンテキストとして付与
+        {
+          role: "system",
+          content: `現在 ${Date()} の時刻と地域で会話しています。挨拶をする場合は時刻と季節を踏まえた内容にしてください。`,
+        },
         ...messageLog,
       ];
 
-      const stream = await getChatResponseStream(messages, openAiKey).catch(
+      const stream = await getChatResponseStream(messages, llmModel).catch(
         (e) => {
           console.error(e);
           return null;
-        }
+        },
       );
       if (stream == null) {
         setChatProcessing(false);
@@ -127,7 +128,7 @@ export default function Home() {
           receivedMessage += value;
 
           // 返答内容のタグ部分の検出
-          const tagMatch = receivedMessage.match(/^\[(.*?)\]/);
+          const tagMatch = receivedMessage.match(/^\[(.*?)]/);
           if (tagMatch && tagMatch[0]) {
             tag = tagMatch[0];
             receivedMessage = receivedMessage.slice(tag.length);
@@ -135,7 +136,7 @@ export default function Home() {
 
           // 返答を一文単位で切り出して処理する
           const sentenceMatch = receivedMessage.match(
-            /^(.+[。．！？\n]|.{10,}[、,])/
+            /^(.+[。．！？\n]|.{10,}[、,])/,
           );
           if (sentenceMatch && sentenceMatch[0]) {
             const sentence = sentenceMatch[0];
@@ -147,15 +148,15 @@ export default function Home() {
             // 発話不要/不可能な文字列だった場合はスキップ
             if (
               !sentence.replace(
-                /^[\s\[\(\{「［（【『〈《〔｛«‹〘〚〛〙›»〕》〉』】）］」\}\)\]]+$/g,
-                ""
+                /^[\s\[({「［（【『〈《〔｛«‹〘〚〛〙›»〕》〉』】）］」})\]]+$/g,
+                "",
               )
             ) {
               continue;
             }
 
             const aiText = `${tag} ${sentence}`;
-            const aiTalks = textsToScreenplay([aiText], koeiroParam);
+            const aiTalks = textsToScreenplay([aiText], voicevoxParam);
             aiTextLog += aiText;
 
             // 文ごとに音声を生成 & 再生、返答を表示
@@ -181,37 +182,28 @@ export default function Home() {
       setChatLog(messageLogAssistant);
       setChatProcessing(false);
     },
-    [systemPrompt, chatLog, handleSpeakAi, openAiKey, koeiroParam]
+    [systemPrompt, chatLog, handleSpeakAi, llmModel, voicevoxParam],
   );
 
   return (
-    <div className={"font-M_PLUS_2"}>
+    <div className={`${m_plus_2.variable} ${montserrat.variable}`}>
       <Meta />
-      <Introduction
-        openAiKey={openAiKey}
-        koeiroMapKey={koeiromapKey}
-        onChangeAiKey={setOpenAiKey}
-        onChangeKoeiromapKey={setKoeiromapKey}
-      />
+      <Introduction llmModel={llmModel} onChangeLlmModel={setLlmModel} />
       <VrmViewer />
       <MessageInputContainer
         isChatProcessing={chatProcessing}
         onChatProcessStart={handleSendChat}
       />
       <Menu
-        openAiKey={openAiKey}
+        llmModel={llmModel}
         systemPrompt={systemPrompt}
         chatLog={chatLog}
-        koeiroParam={koeiroParam}
+        voicevoxParam={voicevoxParam}
         assistantMessage={assistantMessage}
-        koeiromapKey={koeiromapKey}
-        onChangeAiKey={setOpenAiKey}
+        onChangeLlmModel={setLlmModel}
         onChangeSystemPrompt={setSystemPrompt}
         onChangeChatLog={handleChangeChatLog}
-        onChangeKoeiromapParam={setKoeiroParam}
-        handleClickResetChatLog={() => setChatLog([])}
-        handleClickResetSystemPrompt={() => setSystemPrompt(SYSTEM_PROMPT)}
-        onChangeKoeiromapKey={setKoeiromapKey}
+        onChangeVoicevoxParam={setVoicevoxParam}
       />
       <GitHubLink />
     </div>

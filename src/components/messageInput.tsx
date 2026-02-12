@@ -1,13 +1,14 @@
 import { IconButton } from "./iconButton";
+import React, { useCallback } from "react";
 
 type Props = {
   userMessage: string;
   isMicRecording: boolean;
   isChatProcessing: boolean;
   onChangeUserMessage: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
-  onClickSendButton: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleMessageSend: (event: React.SyntheticEvent) => void;
   onClickMicButton: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 export const MessageInput = ({
@@ -16,8 +17,17 @@ export const MessageInput = ({
   isChatProcessing,
   onChangeUserMessage,
   onClickMicButton,
-  onClickSendButton,
+  handleMessageSend,
 }: Props) => {
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") {
+        handleMessageSend(event);
+      }
+    },
+    [handleMessageSend],
+  );
+
   return (
     <div className="absolute bottom-0 z-20 w-screen">
       <div className="bg-base text-black">
@@ -34,6 +44,7 @@ export const MessageInput = ({
               type="text"
               placeholder="聞きたいことをいれてね"
               onChange={onChangeUserMessage}
+              onKeyDown={handleKeyDown}
               disabled={isChatProcessing}
               className="bg-surface1 hover:bg-surface1-hover focus:bg-surface1 disabled:bg-surface1-disabled disabled:text-primary-disabled rounded-16 w-full px-16 text-text-primary typography-16 font-bold disabled"
               value={userMessage}
@@ -44,12 +55,12 @@ export const MessageInput = ({
               className="bg-secondary hover:bg-secondary-hover active:bg-secondary-press disabled:bg-secondary-disabled"
               isProcessing={isChatProcessing}
               disabled={isChatProcessing || !userMessage}
-              onClick={onClickSendButton}
+              onClick={handleMessageSend}
             />
           </div>
         </div>
         <div className="py-4 bg-[#413D43] text-center text-white font-Montserrat">
-          powered by VRoid, Koemotion, ChatGPT API
+          powered by VRoid, VOICEBOX API, Ollama API
         </div>
       </div>
     </div>

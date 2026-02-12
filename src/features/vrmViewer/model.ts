@@ -29,7 +29,7 @@ export class Model {
       (parser) =>
         new VRMLoaderPlugin(parser, {
           lookAtPlugin: new VRMLookAtSmootherLoaderPlugin(parser),
-        })
+        }),
     );
 
     const gltf = await loader.loadAsync(url);
