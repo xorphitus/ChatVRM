@@ -13,7 +13,7 @@
       devShells.${system}.default = pkgs.mkShell {
         name = "nodejs";
         buildInputs = with pkgs; [
-          nodejs_20
+          nodejs_24
           pnpm
           typescript-language-server
         ];

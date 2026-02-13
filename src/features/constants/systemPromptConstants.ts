@@ -1,5 +1,5 @@
-
-const DEFAULT_PERSONALITY = "あなたはuserと仲が良く、ですます調や敬語は使わずに会話を行います。";
+const DEFAULT_PERSONALITY =
+  "あなたはuserと仲が良く、ですます調や敬語は使わずに会話を行います。";
 
 const personality = process.env.NEXT_PUBLIC_PERSONALITY || DEFAULT_PERSONALITY;
 export const SYSTEM_PROMPT = `あなたはこれから1人の人間として振舞いuserと会話を行います。

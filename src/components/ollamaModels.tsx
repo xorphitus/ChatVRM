@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {OLLAMA_URL} from "@/constants/api";
+import { OLLAMA_URL } from "@/constants/api";
 
 type Props = {
   llmModel: string;

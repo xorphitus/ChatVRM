@@ -1,5 +1,5 @@
 import { Message } from "../messages/messages";
-import {OLLAMA_URL} from "@/constants/api";
+import { OLLAMA_URL } from "@/constants/api";
 
 export async function getChatResponseStream(
   messages: Message[],
