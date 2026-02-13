@@ -21,7 +21,7 @@ export async function fetchVoice(
   return synthesizeVoice(speaker, queryJson);
 }
 
-function styleToParameters(style: TalkStyle) {
+export function styleToParameters(style: TalkStyle) {
   let parameters = {
     speedScale: 1.05,
     pitchScale: 0,

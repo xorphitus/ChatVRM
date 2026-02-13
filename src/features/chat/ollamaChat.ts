@@ -1,5 +1,6 @@
 import { Message } from "../messages/messages";
 import { OLLAMA_URL } from "@/constants/api";
+import { parseOllamaChunks } from "./parseOllamaNDJSON";
 
 export async function getChatResponseStream(
   messages: Message[],
@@ -36,15 +37,9 @@ export async function getChatResponseStream(
           const { done, value } = await reader.read();
           if (done) break;
           const data = decoder.decode(value);
-          const chunks = data
-            .split("data:")
-            .filter((val) => !!val && val.trim() !== "[DONE]");
-          for (const chunk of chunks) {
-            const json = JSON.parse(chunk);
-            const messagePiece = json.message.content;
-            if (!!messagePiece) {
-              controller.enqueue(messagePiece);
-            }
+          const pieces = parseOllamaChunks(data);
+          for (const piece of pieces) {
+            controller.enqueue(piece);
           }
         }
       } catch (error) {

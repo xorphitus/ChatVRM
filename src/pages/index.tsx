@@ -14,6 +14,11 @@ import {
   DEFAULT_PARAM,
 } from "@/features/constants/voicevoxParam";
 import { getChatResponseStream } from "@/features/chat/ollamaChat";
+import {
+  extractEmotionTag,
+  extractSentence,
+  isSpeakable,
+} from "@/features/chat/streamProcessor";
 import { M_PLUS_2, Montserrat } from "next/font/google";
 import { Introduction } from "@/components/introduction";
 import { Menu } from "@/components/menu";
@@ -128,30 +133,21 @@ export default function Home() {
           receivedMessage += value;
 
           // 返答内容のタグ部分の検出
-          const tagMatch = receivedMessage.match(/^\[(.*?)]/);
-          if (tagMatch && tagMatch[0]) {
-            tag = tagMatch[0];
-            receivedMessage = receivedMessage.slice(tag.length);
+          const emotionResult = extractEmotionTag(receivedMessage);
+          if (emotionResult.tag) {
+            tag = emotionResult.tag;
+            receivedMessage = emotionResult.remaining;
           }
 
           // 返答を一文単位で切り出して処理する
-          const sentenceMatch = receivedMessage.match(
-            /^(.+[。．！？\n]|.{10,}[、,])/,
-          );
-          if (sentenceMatch && sentenceMatch[0]) {
-            const sentence = sentenceMatch[0];
+          const sentenceResult = extractSentence(receivedMessage);
+          if (sentenceResult) {
+            const sentence = sentenceResult.sentence;
             sentences.push(sentence);
-            receivedMessage = receivedMessage
-              .slice(sentence.length)
-              .trimStart();
+            receivedMessage = sentenceResult.remaining;
 
             // 発話不要/不可能な文字列だった場合はスキップ
-            if (
-              !sentence.replace(
-                /^[\s\[({「［（【『〈《〔｛«‹〘〚〛〙›»〕》〉』】）］」})\]]+$/g,
-                "",
-              )
-            ) {
+            if (!isSpeakable(sentence)) {
               continue;
             }
 

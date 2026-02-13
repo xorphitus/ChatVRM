@@ -1,4 +1,5 @@
 import { LipSyncAnalyzeResult } from "./lipSyncAnalyzeResult";
+import { calculateVolume } from "./volumeAnalysis";
 
 const TIME_DOMAIN_DATA_LENGTH = 2048;
 
@@ -17,17 +18,8 @@ export class LipSync {
   public update(): LipSyncAnalyzeResult {
     this.analyser.getFloatTimeDomainData(this.timeDomainData);
 
-    let volume = 0.0;
-    for (let i = 0; i < TIME_DOMAIN_DATA_LENGTH; i++) {
-      volume = Math.max(volume, Math.abs(this.timeDomainData[i]));
-    }
-
-    // cook
-    volume = 1 / (1 + Math.exp(-45 * volume + 5));
-    if (volume < 0.1) volume = 0;
-
     return {
-      volume,
+      volume: calculateVolume(this.timeDomainData),
     };
   }
 

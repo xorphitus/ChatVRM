@@ -68,7 +68,7 @@ export const textsToScreenplay = (
   return screenplays;
 };
 
-const emotionToTalkStyle = (emotion: EmotionType): TalkStyle => {
+export const emotionToTalkStyle = (emotion: EmotionType): TalkStyle => {
   switch (emotion) {
     case "angry":
       return "angry";
