@@ -1,7 +1,7 @@
 import React from "react";
 import { IconButton } from "./iconButton";
 import { TextButton } from "./textButton";
-import { Message } from "@/features/messages/messages";
+import { Message } from "@/types/message";
 import { VoicevoxParam } from "@/features/constants/voicevoxParam";
 import { OllamaModels } from "@/components/ollamaModels";
 
