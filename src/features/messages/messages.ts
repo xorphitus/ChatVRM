@@ -1,11 +1,7 @@
 import { VRMExpressionPresetName } from "@pixiv/three-vrm";
 import { VoicevoxParam } from "../constants/voicevoxParam";
 
-// Ollama API
-export type Message = {
-  role: "assistant" | "system" | "user";
-  content: string;
-};
+export type { Message } from "@/types/message";
 
 const talkStyles = [
   "talk",

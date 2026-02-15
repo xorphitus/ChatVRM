@@ -1,4 +1,4 @@
-import { Message } from "../messages/messages";
+import { Message } from "@/types/message";
 import { OLLAMA_URL } from "@/constants/api";
 import { parseOllamaChunks } from "./parseOllamaNDJSON";
 
